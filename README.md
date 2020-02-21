@@ -1,6 +1,6 @@
 # Find missing translations in Laravel application
 
-An Laravel artisan command to list all your untranslated word 
+An Laravel artisan command to list all your untranslated word. 
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ Installing this command is easy, follow the steps below :
 2. copy "FindMissingTranslations.php" file to /app/Console/Commands of your laravel project.
 
 By completing this steps the command should work, unless the command is not loaded automaticly.
-To load the command go to app/Console/Kernel.php and the class name to the $commands property
+To load the command go to app/Console/Kernel.php and the class name to the $commands property.
 
 ```
 protected $commands = [
@@ -39,7 +39,7 @@ $ php artisan translations:missing /resources/lang en
 
 ## Features
 #### Recursive
-Detects missing words in multi level array for ex.  
+Detects missing words in multilevel array for ex.  
 ![Multilevel array](https://imgur.com/Hn4YQB7.png)
 
 #### Missing files
