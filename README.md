@@ -14,7 +14,7 @@ Installing this command is easy, follow the steps below :
 2. copy "FindMissingTranslations.php" file to /app/Console/Commands of your laravel project.
 
 By completing this steps the command should work, unless the command is not loaded automaticly.
-To load the command go to app/Console/Kernel.php and the class name to the $commands property.
+To load the command go to app/Console/Kernel.php and add the class name to the $commands property.
 
 ```
 protected $commands = [
@@ -32,6 +32,8 @@ Inside of **language directory**
 ![Language directory](https://i.imgur.com/eXGlUI8.png)
 
 While **base language** should be one of the language listed in the picture.
+
+### Example
 ```
 $ php artisan translations:missing /resources/lang en
 ```
