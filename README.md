@@ -1,6 +1,6 @@
-# One command tofind missing translations in Laravel application
+# One command to find missing translations in Laravel application
 
-An Laravel artisan command to list all your untranslated word. 
+An Laravel artisan command to list all your untranslated words. 
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ Detects missing words in multilevel array for ex.
 ![Multilevel array](https://imgur.com/Hn4YQB7.png)
 
 #### Missing files
-Detects missing files, for ex. if file with translation named "posts.php" exists in english but not in deutsch
+Detects missing files, for ex. if file with translation named "posts.php" exists in english but not in deutsch.
 ## Authors
 
 * **Veton Muhaxhiri** - [LinkedIn](https://www.linkedin.com/in/veton-muhaxhiri-815113196)
