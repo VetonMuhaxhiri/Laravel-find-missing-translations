@@ -1,4 +1,4 @@
-# Find missing translations in Laravel application
+# One command tofind missing translations in Laravel application
 
 An Laravel artisan command to list all your untranslated word. 
 
@@ -26,7 +26,7 @@ protected $commands = [
 
 The command expects to arguments :
 1. **language directory** - Relative path of language directory for ex. /resources/lang is a directory that contains all supported language in your laravel app.
-2. **base language** - Base language for ex. "english". All other languages are compared to this language.
+2. **base language** - Base language for ex. "en". All other languages are compared to this language.
 
 Inside of **language directory**  
 ![Language directory](https://i.imgur.com/eXGlUI8.png)
