@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use File;
+use Illuminate\Support\Facades\File;
 
 class FindMissingTranslations extends Command
 {
