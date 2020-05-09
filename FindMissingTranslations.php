@@ -39,107 +39,116 @@ class FindMissingTranslations extends Command
      */
     public function handle() {
         $languageDir = base_path(). $this->argument('language directory');
-        $baseLangDir = $languageDir. '/'. $this->argument('base language');
+        $baseLanguageDirectory = $languageDir. '/'. $this->argument('base language');
 
         try {
-            $languagesDir = File::directories($languageDir); 
-            $baseLanguageFiles = $this->getFilesName($baseLangDir);
+            $directoriesOfLanguages = File::directories($languageDir); 
+            $baseLanguageFiles = $this->getFilenames($baseLanguageDirectory);
         } catch (\Exception $e) {
             $this->line('');
             $this->error($e->getMessage());
+
             exit;
         }
 
-        foreach($languagesDir as $secondLanguageDir) {
-            $this->line('');
+        foreach($directoriesOfLanguages as $languageDirectory) {
+            $languageFiles = $this->getFilenames($languageDirectory);
 
-            $secondLanguageFiles = $this->getFilesName($secondLanguageDir);
-            $baseLangName = explode("/", $baseLangDir);
-            $baseLangName = explode("\\", $baseLangName[count($baseLangName)-1]);
-            $baseLangName = $baseLangName[count($baseLangName)-1];
+            $baseLanguageName = explode("/", $baseLanguageDirectory);
+            $baseLanguageName = explode("\\", $baseLanguageName[count($baseLanguageName)-1]);
+            $baseLanguageName = $baseLanguageName[count($baseLanguageName)-1];
 
-            $secondLangName = explode("/", $secondLanguageDir);
-            $secondLangName = explode("\\", $secondLangName[count($secondLangName)-1]);
-            $secondLangName = $secondLangName[count($secondLangName)-1];
+            $languageName = explode("/", $languageDirectory);
+            $languageName = explode("\\", $languageName[count($languageName)-1]);
+            $languageName = $languageName[count($languageName)-1];
 
-            if($baseLangName == $secondLangName) { 
+            if($baseLanguageName == $languageName) {
+                //Skip the base language, we don't have to compare language by it's self
                 continue;
             }
 
-            $this->info('Comparing '. $baseLangName. ' to '. $secondLangName. '.');
-            $this->compareLanguages($baseLangDir, $baseLanguageFiles, $secondLanguageDir, $secondLanguageFiles,$baseLangName,$secondLangName);
+            $this->info('Comparing '. $baseLanguageName. ' to '. $languageName. '.');
+
+            $this->compareLanguages($baseLanguageDirectory, $baseLanguageFiles, $languageDirectory, $languageFiles, $languageName);
+           
+            $this->info('');
+            $this->info('Successfuly compared all languages');
         }
     }
     
     /**
      * Comparing languages
      * 
-     * @param String $baseLangDir
+     * @param String $baseLanguagePath
      * @param String $baseLanguageFiles
-     * @param String $secondLanguageDir
-     * @param String $secondLanguageFiles
-     * @param String $lang1
-     * @param String $lang2
+     * @param String $languagePath
+     * @param Array $languageFiles The list of language files
+     * @param String $languageName
      * 
      * @return void
      */
-    function compareLanguages($baseLangDir, $baseLanguageFiles, $secondLanguageDir, $secondLanguageFiles, $lang1, $lang2) {
+    private function compareLanguages($baseLanguagePath, $baseLanguageFiles, $languagePath, $languageFiles, $languageName) {
+        
         foreach($baseLanguageFiles as $languageFile) {
-            $file = File::getRequire($baseLangDir. '/'. $languageFile);
+            $baseLanguageFile = File::getRequire($baseLanguagePath. '/'. $languageFile);
             
-            if(!in_array($languageFile,$secondLanguageFiles)) {
+            if(!in_array($languageFile, $languageFiles)) {
                 $this->line('');
                 $this->comment('Comparing translations in '. $languageFile. '.');
-                $this->error($lang2. '/'. $languageFile. ' file is missing.');
+                $this->error($languageName. '/'. $languageFile. ' file is missing.');
                 continue;
             }
-            $secondLanguageFile = File::getRequire($secondLanguageDir. '/'. $languageFile);
+            $secondLanguageFile = File::getRequire($languagePath. '/'. $languageFile);
             
-            $this->compareFiles($file,$secondLanguageFile,$lang1,$lang2,$languageFile);
+            $this->compareFileKeys($baseLanguageFile, $secondLanguageFile, $languageName, $languageFile);
         }
+
     }
 
     /**
-     *  Display missing translations
+     *  Compare files and display missing translations
      *
-     * @param Array $array1
-     * @param Array $array2
-     * @param String $lang1 
-     * @param String $lang2 
+     * @param Array $baseLanguageFileKeys
+     * @param Array $secondLanguageFileKeys
+     * @param String $languageName 
      * @param String $filename 
      *
      * @return void
      */
-    function compareFiles($array1, $array2, $lang1, $lang2, $filename) {
-        $diff_result = $this->arrayDiffRecursive($array1, $array2);
-        if(is_array($diff_result)) {
-            if(count($diff_result)) {
+    private function compareFileKeys($baseLanguageFileKeys, $secondLanguageFileKeys, $languageName, $filename) {
+
+        $missingKeys = $this->arrayDiffRecursive($baseLanguageFileKeys, $secondLanguageFileKeys);
+
+        if(is_array($missingKeys)) {
+            if(count($missingKeys)) {
                 $this->line('');
                 $this->comment('Comparing translations in '. $filename. '.');
-                $this->error('Found missing translations in /' . $lang2. '/'. $filename. '.');
-                foreach($diff_result as $result) {
-                    $this->line('"'.$result.'" is not translated to /'. $lang2. '/'. $filename);
+                $this->error('Found missing translations in /' . $languageName. '/'. $filename. '.');
+
+                foreach($missingKeys as $key) {
+                    $this->line('"'.$key.'" is not translated to /'. $languageName. '/'. $filename);
                 }
             }
         } else {
-            $this->info('Not array!');
+            $this->info('Bad file, cannot proccess!');
         }
     }
 
     /**
      * Compare array keys recursivly
      * 
-     * @param Array $arr1
-     * @param Array $arr2
+     * @param array $firstArray
+     * @param array $secondArray
      * 
-     * @return Array
+     * @return array
      */
-    function arrayDiffRecursive($arr1, $arr2) {
+    private function arrayDiffRecursive($firstArray, $secondArray) {
         $outputDiff = [];
-        foreach($arr1 as $key => $value) {
-            if(array_key_exists($key, $arr2)) {
+
+        foreach($firstArray as $key => $value) {
+            if(array_key_exists($key, $secondArray)) {
                 if(is_array($value)) {
-                    $recursiveDiff = $this->arrayDiffRecursive($value, $arr2[$key]);
+                    $recursiveDiff = $this->arrayDiffRecursive($value, $secondArray[$key]);
                     if(count($recursiveDiff)) {
                         foreach($recursiveDiff as $diff) {
                             $outputDiff[] = $diff;
@@ -156,16 +165,19 @@ class FindMissingTranslations extends Command
     /**
      * Get filenames of directory
      *
-     * @param String $folder
-     * @return Array
+     * @param String $directory
+     * @return array
      */
-    public function getFilesName($folder) {
+    private function getFilenames($directory) {
         $fileNames = [];
-        $filesInFolder = File::files($folder);     
+
+        $filesInFolder = File::files($directory);    
+
         foreach($filesInFolder as $path) { 
             $file = pathinfo($path);
             $fileNames[] = $file['basename'];
         }
+
         return $fileNames;
     } 
 }
