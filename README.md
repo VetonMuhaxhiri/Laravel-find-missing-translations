@@ -18,7 +18,7 @@ By running composer command you will have everything setup and ready to be used.
 
 ### Manually
 1. git clone the repository, or just download it.
-2. copy "FindMissingTranslations.php" file to /app/Console/Commands of your laravel project.
+2. copy "src/Commands/FindMissingTranslations.php" file to /app/Console/Commands of your laravel project.
 
 By completing this steps the command should work, unless the command is not loaded automaticly.
 To load the command go to app/Console/Kernel.php and add the class name to the $commands property.
