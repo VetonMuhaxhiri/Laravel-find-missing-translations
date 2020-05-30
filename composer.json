@@ -1,0 +1,33 @@
+
+{
+    "name": "VetonMuhaxhiri/Laravel-find-missing-translations",
+    "description": "Response control for Laravel/Lumen 5 and up.",
+    "homepage": "https://github.com/VetonMuhaxhiri/Laravel-find-missing-translations",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Veton Muhaxhiri",
+            "email": "veto.on@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "VetonMuhaxhiri\\Laravelfindmissingtranslations\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/support": "~5.6.34|~5.7.0|~5.8.0|^6.0|^7.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "VetonMuhaxhiri\\Laravelfindmissingtranslations\\Providers\\FindMissingTranslationsProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
