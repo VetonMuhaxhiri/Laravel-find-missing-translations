@@ -1,6 +1,6 @@
 
 {
-    "name": "VetonMuhaxhiri/Laravel-find-missing-translations",
+    "name": "veton-muhaxhiri/laravel-find-missing-translations",
     "description": "Response control for Laravel/Lumen 5 and up.",
     "homepage": "https://github.com/VetonMuhaxhiri/Laravel-find-missing-translations",
     "license": "MIT",
