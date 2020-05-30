@@ -3,6 +3,7 @@
 namespace VetonMuhaxhiri\Laravelfindmissingtranslations\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use VetonMuhaxhiri\Laravelfindmissingtranslations\Commands\FindMissingTranslations;
 
 class FindMissingTranslationsProvider extends ServiceProvider
 {
@@ -13,6 +14,11 @@ class FindMissingTranslationsProvider extends ServiceProvider
      */
     public function boot()
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                FindMissingTranslations::class
+            ]);
+        }
     }
 
     /**
