@@ -8,13 +8,14 @@ There is no prerequisites for this command to work, you just need to follow the 
 
 ## Installing
 
-Installing this command is easy, you can use composer or do it manually :
-### Composer
+Installing this command is easy, you can use composer or do it manually:
 
-```
-composer require veton-muhaxhiri/laravel-command-to-find-missing-translations
-```
-By running composer command you will have everything setup and ready to be used.
+### Laravel
+* composer require veton-muhaxhiri/laravel-command-to-find-missing-translations
+
+### Lumen
+* composer require veton-muhaxhiri/laravel-command-to-find-missing-translations
+* Open bootstrap/app.php file and Register Service Provider $app->register(VetonMuhaxhiri\Laravelfindmissingtranslations\Providers\FindMissingTranslationsProvider::class);
 
 ### Manually
 1. git clone the repository, or just download it.
@@ -56,6 +57,3 @@ Detects missing files, for ex. if file with translation named "posts.php" exists
 ## Authors
 
 * **Veton Muhaxhiri** - [LinkedIn](https://www.linkedin.com/in/veton-muhaxhiri-815113196)
-
-
-
