@@ -28,6 +28,9 @@ protected $commands = [
     Commands\FindMissingTranslations::class
 ];
 ```
+### Lumen
+In Laravel Lumen we just need one extra step, go open ```bootstrap/app.php``` file and register the service provider by adding the line
+```$app->register(VetonMuhaxhiri\Laravelfindmissingtranslations\Providers\FindMissingTranslationsProvider::class);```
 
 ## Running the command
 
