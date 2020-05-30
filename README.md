@@ -8,8 +8,15 @@ There is no prerequisites for this command to work, you just need to follow the 
 
 ## Installing
 
-Installing this command is easy, follow the steps below :
+Installing this command is easy, you can use composer or do it manually :
+### Composer
 
+```
+composer require veton-muhaxhiri/laravel-command-to-find-missing-translations
+```
+By running composer command you will have everything setup and ready to be used.
+
+### Manually
 1. git clone the repository, or just download it.
 2. copy "FindMissingTranslations.php" file to /app/Console/Commands of your laravel project.
 
@@ -49,5 +56,6 @@ Detects missing files, for ex. if file with translation named "posts.php" exists
 ## Authors
 
 * **Veton Muhaxhiri** - [LinkedIn](https://www.linkedin.com/in/veton-muhaxhiri-815113196)
+
 
 
